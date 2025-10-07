@@ -4,7 +4,12 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
   "cSpell.words": [
+    "ANNN",
+    "BNNN",
     "crossterm",
-    "ratatui"
+    "CXNN",
+    "DXYN",
+    "ratatui",
+    "repr"
   ]
 }
