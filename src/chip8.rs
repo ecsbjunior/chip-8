@@ -1,10 +1,13 @@
 use std::time::{Duration, Instant};
 
-use crate::keyboard::{KeyCode, KeyState};
+use crate::{
+  audio::Audio,
+  keyboard::{KeyCode, KeyState},
+};
 
-pub static CYCLE_HZ: usize = 600;
-pub static TIMER_HZ: usize = 60;
-pub static DISPLAY_HZ: usize = 30;
+pub static CYCLE_HZ: usize = 750;
+pub static TIMER_HZ: usize = 15;
+pub static DISPLAY_HZ: usize = 45;
 
 pub static KEY_SIZE: usize = 16;
 pub static STACK_SIZE: usize = 16;
@@ -201,6 +204,7 @@ pub struct Chip8 {
   delay_timer: u8,
   sound_timer: u8,
 
+  audio: Audio,
   can_draw: bool,
   shift_quirk: bool,
   cycle_start: Instant,
@@ -236,7 +240,7 @@ impl Chip8 {
 }
 
 impl Chip8 {
-  pub fn new() -> Self {
+  pub fn new(audio: Audio) -> Self {
     let mut chip8 = Self {
       i: 0,
       pc: ROM_START_ADDRESS as u16,
@@ -249,6 +253,7 @@ impl Chip8 {
       delay_timer: 0,
       sound_timer: 0,
 
+      audio,
       can_draw: false,
       shift_quirk: false,
       cycle_start: Instant::now(),
@@ -385,6 +390,9 @@ impl Chip8 {
   fn update_sound_timer(&mut self) {
     if self.sound_timer > 0 {
       self.sound_timer -= 1;
+      self.audio.play(600.0);
+    } else {
+      self.audio.stop();
     }
   }
 }

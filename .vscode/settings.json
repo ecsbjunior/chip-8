@@ -10,6 +10,7 @@
     "CXNN",
     "DXYN",
     "ratatui",
-    "repr"
+    "repr",
+    "rodio"
   ]
 }

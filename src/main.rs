@@ -1,16 +1,18 @@
+mod audio;
 mod chip8;
 mod console;
 mod keyboard;
 
 use std::{error::Error, io};
 
-use crate::{chip8::Chip8, console::Console, keyboard::KeyboardState};
+use crate::{audio::Audio, chip8::Chip8, console::Console, keyboard::KeyboardState};
 
 fn main() -> Result<(), Box<dyn Error>> {
-  let mut chip8 = Chip8::new();
+  let audio = Audio::new()?;
+  let mut chip8 = Chip8::new(audio);
   let mut console = Console::new(io::stdout());
 
-  chip8.load_rom(include_bytes!("../games/tetris.ch8"));
+  chip8.load_rom(include_bytes!("../games/breakout.ch8"));
 
   console.init()?;
 
